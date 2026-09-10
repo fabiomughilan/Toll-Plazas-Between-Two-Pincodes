@@ -7,6 +7,37 @@
 	},
 	"item": [
 		{
+			"name": "Base cURL - Production",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sourcePincode\": \"560064\",\n  \"destinationPincode\": \"411045\"\n}"
+				},
+				"url": {
+					"raw": "https://toll-plazas-between-two-pincodes.onrender.com/api/v1/toll-plazas",
+					"protocol": "https",
+					"host": [
+						"toll-plazas-between-two-pincodes",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"toll-plazas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "1. Successful Route Query (Bengaluru to Pune)",
 			"request": {
 				"method": "POST",

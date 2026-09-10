@@ -1,5 +1,22 @@
 target/
+
+# IDE metadata
 .idea/
 *.iml
 .vscode/
+
+# Maven and Java build output
+*.class
+*.jar
+*.war
+*.ear
+hs_err_pid*
+replay_pid*
+.flattened-pom.xml
+dependency-reduced-pom.xml
+
+# Local logs and environment files
 *.log
+.env
+.env.*
+!.env.example

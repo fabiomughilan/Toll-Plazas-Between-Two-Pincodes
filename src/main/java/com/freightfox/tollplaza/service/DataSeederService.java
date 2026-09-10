@@ -85,9 +85,9 @@ public class DataSeederService implements CommandLineRunner {
 
     private void seedTollPlazas() {
         try {
-            ClassPathResource resource = new ClassPathResource("data/toll_plazas_india.csv");
+            ClassPathResource resource = new ClassPathResource("data/toll_plaza_india.csv");
             if (!resource.exists()) {
-                log.warn("toll_plazas_india.csv resource not found!");
+                log.warn("toll_plaza_india.csv resource not found!");
                 return;
             }
 
@@ -102,11 +102,10 @@ public class DataSeederService implements CommandLineRunner {
 
                 List<TollPlazaEntity> plazasToSave = new ArrayList<>();
                 for (CSVRecord record : records) {
-                    String name = record.get("name").trim();
+                    String name = record.get("toll_name").trim();
                     double lat = Double.parseDouble(record.get("latitude").trim());
                     double lon = Double.parseDouble(record.get("longitude").trim());
-                    String highway = record.isMapped("highway") ? record.get("highway").trim() : "";
-                    String state = record.isMapped("state") ? record.get("state").trim() : "";
+                    String state = record.isMapped("geo_state") ? record.get("geo_state").trim() : "";
 
                     // Check for existing entity by name for true upsert
                     TollPlazaEntity entity = tollPlazaRepository.findByName(name)
@@ -115,7 +114,7 @@ public class DataSeederService implements CommandLineRunner {
                     entity.setName(name);
                     entity.setLatitude(lat);
                     entity.setLongitude(lon);
-                    entity.setHighway(highway);
+                    entity.setHighway("");
                     entity.setState(state);
 
                     plazasToSave.add(entity);

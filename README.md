@@ -12,7 +12,7 @@ live link : https://toll-plazas-between-two-pincodes.onrender.com
 - **In-Memory Caching (`@Cacheable`)**: High-performance caching for route calculations. Identical pincode queries execute in `<5ms`.
 - **Database Seeding & Upserts**: Auto-seeds Indian postal pincodes and NHAI Toll Plazas from CSV files into H2 database using batch upsert operations.
 - **Validation & Exception Handling**: Enforces 6-digit Indian pincode format (`^[1-9][0-9]{5}$`) and handles edge cases like same source/destination pincodes or unknown pincodes.
-- **Interactive UI Dashboard & OpenAPI**: Includes built-in OpenAPI / Swagger UI at `/swagger-ui.html` and an interactive web playground at `/`.
+- **OpenAPI Documentation**: Includes built-in OpenAPI / Swagger UI at `/swagger-ui.html`.
 - **100% Test Coverage**: Full TDD implementation with JUnit 5, Mockito, and Spring `@WebMvcTest`.
 
 ---
@@ -109,13 +109,12 @@ This service is a JVM app, so Render builds it from the included `Dockerfile`. T
    - **Runtime**: Docker
    - **Dockerfile path**: `./Dockerfile`
    - **Health check path**: `/`
-3. After the first deploy succeeds, open the Render URL. The dashboard is at `/`, Swagger at `/swagger-ui.html`, and the API at `POST /api/v1/toll-plazas`.
+3. After the first deploy succeeds, open the Render URL. Swagger is at `/swagger-ui.html`, and the API is at `POST /api/v1/toll-plazas`.
 
 Render injects `PORT` automatically. Locally the app still defaults to `8081`.
 
 ---
 
-## 🧪 Postman & UI Testing
+## 🧪 Postman Testing
 
-1. **Interactive Dashboard**: Open `http://localhost:8081` in your browser.
-2. **Postman Collection**: Import `TollPlazaAPI.postman_collection.json` located in the root directory into Postman.
+Import `TollPlazaAPI.postman_collection.json` located in the root directory into Postman. The collection includes a production request for the deployed Render API.
