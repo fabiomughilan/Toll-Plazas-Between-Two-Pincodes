@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: toll-plaza-service
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: H2_CONSOLE_ENABLED
+        value: "false"

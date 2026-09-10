@@ -94,7 +94,22 @@ mvn clean test
 ```bash
 mvn spring-boot:run
 ```
-The application will start on **http://localhost:8081** (or port 8080 if configured).
+The application will start on **http://localhost:8081** (or the value of `PORT` if set).
+
+---
+
+## Deploy on Render
+
+This service is a JVM app, so Render builds it from the included `Dockerfile`. The GitHub repo is already connected as `origin`.
+
+1. Push the latest `main` branch to GitHub.
+2. In the [Render Dashboard](https://dashboard.render.com/), choose **New → Blueprint** and select `fabiomughilan/Freight-Fox-Toll-Plazas-Between-Two-Pincodes`, **or** create a **Web Service** from that repo and set:
+   - **Runtime**: Docker
+   - **Dockerfile path**: `./Dockerfile`
+   - **Health check path**: `/`
+3. After the first deploy succeeds, open the Render URL. The dashboard is at `/`, Swagger at `/swagger-ui.html`, and the API at `POST /api/v1/toll-plazas`.
+
+Render injects `PORT` automatically. Locally the app still defaults to `8081`.
 
 ---
 
