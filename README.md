@@ -2,6 +2,8 @@
 
 A production-grade **Spring Boot REST API** that determines toll plazas located along the driving route between two Indian pincodes.
 
+live link : https://toll-plazas-between-two-pincodes.onrender.com
+
 ---
 
 ## 🚀 Key Features
@@ -116,5 +118,4 @@ Render injects `PORT` automatically. Locally the app still defaults to `8081`.
 ## 🧪 Postman & UI Testing
 
 1. **Interactive Dashboard**: Open `http://localhost:8081` in your browser.
-2. **Swagger UI Docs**: Access `http://localhost:8081/swagger-ui.html`.
-3. **Postman Collection**: Import `TollPlazaAPI.postman_collection.json` located in the root directory into Postman.
+2. **Postman Collection**: Import `TollPlazaAPI.postman_collection.json` located in the root directory into Postman.
