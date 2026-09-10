@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toll Plaza Route Finder | Freightfox API Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --success: #10b981;
+      --danger: #ef4444;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white;
+      font-weight: 700;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      font-size: 1.1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 1rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .header-links a:hover {
+      background-color: var(--accent-glow);
+      border-color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-sub);
+      margin-bottom: 0.4rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      transition: border 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .quick-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .preset-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      font-size: 0.75rem;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .preset-btn:hover {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.9;
+    }
+
+    .metrics-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric-card {
+      background-color: var(--bg-dark);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 0.25rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+      font-size: 0.9rem;
+    }
+
+    th {
+      color: var(--text-sub);
+      font-weight: 500;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    td {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+    .badge-cache { background: rgba(56, 189, 248, 0.2); color: var(--accent); }
+    .badge-error { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+
+    pre {
+      background-color: var(--bg-dark);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      color: #e2e8f0;
+      max-height: 250px;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo-group">
+        <div class="logo-badge">FF</div>
+        <div>
+          <h1>Toll Plaza Route Finder API</h1>
+          <p style="font-size: 0.85rem; color: var(--text-sub);">Backend Assignment - Spring Boot REST API</p>
+        </div>
+      </div>
+      <div class="header-links">
+        <a href="/swagger-ui.html" target="_blank">Swagger UI</a>
+        <a href="/h2-console" target="_blank">H2 Console</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Left Panel: Input Form -->
+      <div class="card">
+        <div class="card-title">🔍 Query Parameters</div>
+        <form id="tollForm">
+          <div class="form-group">
+            <label for="sourcePincode">Source Pincode</label>
+            <input type="text" id="sourcePincode" value="560064" required maxlength="6">
+          </div>
+          <div class="form-group">
+            <label for="destinationPincode">Destination Pincode</label>
+            <input type="text" id="destinationPincode" value="411045" required maxlength="6">
+          </div>
+
+          <label>Presets for Testing</label>
+          <div class="quick-presets">
+            <button type="button" class="preset-btn" onclick="setPreset('560064', '411045')">Bengaluru ➔ Pune</button>
+            <button type="button" class="preset-btn" onclick="setPreset('110001', '560001')">Delhi ➔ Bengaluru</button>
+            <button type="button" class="preset-btn" onclick="setPreset('110001', '400001')">Delhi ➔ Mumbai</button>
+            <button type="button" class="preset-btn" onclick="setPreset('110001', '110001')">Same Pincode Error</button>
+            <button type="button" class="preset-btn" onclick="setPreset('000000', '560001')">Invalid Pincode Error</button>
+          </div>
+
+          <button type="submit" class="submit-btn" id="submitBtn">Execute Request</button>
+        </form>
+
+        <div class="status-indicator">
+          <div class="dot"></div>
+          <span>API Status: <strong style="color: var(--text-main);">Online & Active</strong></span>
+        </div>
+      </div>
+
+      <!-- Right Panel: Results -->
+      <div>
+        <div class="metrics-bar" id="metricsBar" style="display: none;">
+          <div class="metric-card">
+            <div class="metric-label">Route Distance</div>
+            <div class="metric-value" id="metricDistance">0 km</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Toll Plazas Count</div>
+            <div class="metric-value" id="metricTolls">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Response Time</div>
+            <div class="metric-value" id="metricLatency">0 ms</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom: 1.5rem;">
+          <div class="card-title" style="justify-content: space-between;">
+            <span>🛣️ Route Toll Plazas</span>
+            <span id="responseStatusBadge"></span>
+          </div>
+
+          <div id="tableContainer">
+            <p style="color: var(--text-sub); font-size: 0.9rem;">Click "Execute Request" to find toll plazas along the route.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">💻 Raw JSON Response</div>
+          <pre id="jsonOutput">{ "info": "Awaiting API request..." }</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function setPreset(src, dest) {
+      document.getElementById('sourcePincode').value = src;
+      document.getElementById('destinationPincode').value = dest;
+    }
+
+    document.getElementById('tollForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const src = document.getElementById('sourcePincode').value.trim();
+      const dest = document.getElementById('destinationPincode').value.trim();
+      const btn = document.getElementById('submitBtn');
+
+      btn.disabled = true;
+      btn.innerText = 'Calculating Route...';
+
+      const startTime = performance.now();
+
+      try {
+        const response = await fetch('/api/v1/toll-plazas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sourcePincode: src, destinationPincode: dest })
+        });
+
+        const endTime = performance.now();
+        const latency = Math.round(endTime - startTime);
+
+        const data = await response.json();
+        document.getElementById('jsonOutput').innerText = JSON.stringify(data, null, 2);
+
+        const badge = document.getElementById('responseStatusBadge');
+        if (response.ok) {
+          badge.className = 'badge badge-success';
+          badge.innerText = `200 OK (${latency}ms)`;
+
+          document.getElementById('metricsBar').style.display = 'grid';
+          document.getElementById('metricDistance').innerText = (data.route ? data.route.distanceInKm : 0) + ' km';
+          document.getElementById('metricTolls').innerText = data.tollPlazas ? data.tollPlazas.length : 0;
+          document.getElementById('metricLatency').innerText = latency + ' ms';
+
+          renderTable(data.tollPlazas);
+        } else {
+          badge.className = 'badge badge-error';
+          badge.innerText = `400 Bad Request`;
+          document.getElementById('metricsBar').style.display = 'none';
+          document.getElementById('tableContainer').innerHTML = `<p style="color: var(--danger); font-weight: 500;">❌ ${data.error || 'Request failed'}</p>`;
+        }
+      } catch (err) {
+        document.getElementById('jsonOutput').innerText = JSON.stringify({ error: err.message }, null, 2);
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Execute Request';
+      }
+    });
+
+    function renderTable(tolls) {
+      if (!tolls || tolls.length === 0) {
+        document.getElementById('tableContainer').innerHTML = '<p style="color: var(--text-sub);">No toll plazas found along this route corridor.</p>';
+        return;
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Toll Plaza Name</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>Distance from Source</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      tolls.forEach((toll, index) => {
+        html += `
+          <tr>
+            <td>${index + 1}</td>
+            <td style="font-family: inherit; font-weight: 600; color: var(--text-main);">${toll.name}</td>
+            <td>${toll.latitude}</td>
+            <td>${toll.longitude}</td>
+            <td><span class="badge badge-cache">${toll.distanceFromSource} km</span></td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+      document.getElementById('tableContainer').innerHTML = html;
+    }
+  </script>
+</body>
+</html>

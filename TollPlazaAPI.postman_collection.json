@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "b7f2f0f4-toll-plaza-api-collection",
+		"name": "Toll Plaza Route API - Freightfox",
+		"description": "Postman Collection for testing Spring Boot Toll Plaza Route REST API.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Successful Route Query (Bengaluru to Pune)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sourcePincode\": \"560064\",\n  \"destinationPincode\": \"411045\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/toll-plazas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"toll-plazas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. Successful Route Query (Delhi to Bengaluru)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sourcePincode\": \"110001\",\n  \"destinationPincode\": \"560001\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/toll-plazas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"toll-plazas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. Error Case - Same Source & Destination Pincode",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sourcePincode\": \"110001\",\n  \"destinationPincode\": \"110001\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/toll-plazas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"v1",
+						"toll-plazas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. Error Case - Invalid Pincode Format",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"sourcePincode\": \"000000\",\n  \"destinationPincode\": \"560001\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/toll-plazas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"toll-plazas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
